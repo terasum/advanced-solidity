@@ -51,3 +51,9 @@ struct S {
     uint8 d;
 }
 ```
+
+
+
+## Reference
+
+[1] https://blog.ethereum.org/2015/06/26/state-tree-pruning/
