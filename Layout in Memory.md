@@ -20,20 +20,11 @@ Solidity 内存数组红的元素总是会占用32字节的倍数的内存（即
 
 [TODO 这里放一张图]
 
-<div class="warning" style="background:#ffedcc; min-height: 50px; padding-bottom: 10px;">
-  <p style="background: #f0b37e; color: #fff; padding-left: 10px;"><b>Warning</b></p>
-  <p style="padding-left:10px; line-height:16px; font-size:16px; margin-bottom: 15px;">
-    There are some operations in Solidity that need a temporary memory area larger than 64 bytes and therefore will not fit into the scratch space. They will be placed where the free memory points to, but given their short lifetime, the pointer is not updated. The memory may or may not be zeroed out. Because of this, one should not expect the free memory to point to zeroed out memory.</p>
-    <p style="padding-left:10px; line-height:16px; font-size:16px; margin-bottom: 15px;">
-    有些稳定的操作需要大于64字节的临时内存区域，因此无法放入暂存空间。它们将被放置在空闲内存指向的位置，但是由于它们的生存期很短，指针不会被更新。内存可以归零，也可以不归零。因此，不应该期望空闲内存指向归零内存。</p>
-  <p style="padding-left:10px; line-height:16px; font-size:16px; margin-bottom: 15px;">
-    While it may seem like a good idea to use `msize` to arrive at a definitely zeroed out memory area, using such a pointer non-temporarily without updating the free memory pointer can have unexpected results.</p>
-    <p style="padding-left:10px; line-height:16px; font-size:16px; margin-bottom: 15px;">
-      虽然使用msize来获得一个绝对归零的内存区域似乎是一个好主意，但是在不更新空闲内存指针的情况下非暂时地使用这样的指针可能会产生意想不到的结果。
-不同的存储布局</p>
-</div>
-
-
+> **注意**
+>
+> Solidity 中的有些操作需要操作大于64字节的临时内存区域，因此无法放入暂存空间 (scratch space)。此时他们会被放到空闲指针指向的位置，但是由于他们的生命周期很短，实际的内存指针不会被更新。这个指针有可能会被清零（zeroed out），也可能不会，所以不可以认为空闲内存指针一定会指向零值内存区。
+>
+> 虽然使用 `msize`来获得一个绝对归零的内存区域似乎行得通，但是在不更新空闲内存指针的情况下非暂时地使用这样的指针可能会产生意想不到的结果，所以请不要这么做。
 
 ## 与Storage 内部存储布局的差异
 
